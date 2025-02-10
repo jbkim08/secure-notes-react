@@ -6,23 +6,23 @@ import toast from "react-hot-toast";
 const ContextApi = createContext();
 
 export const ContextProvider = ({ children }) => {
-  //find the token in the localstorage
+  //로컬스토리지 토큰을 가져옴
   const getToken = localStorage.getItem("JWT_TOKEN")
     ? JSON.stringify(localStorage.getItem("JWT_TOKEN"))
     : null;
-  //find is the user status from the localstorage
+  //로컬스토리지 유저가 관리자 인지 가져옴
   const isADmin = localStorage.getItem("IS_ADMIN")
     ? JSON.stringify(localStorage.getItem("IS_ADMIN"))
     : false;
 
-  //store the token
+  //토큰 상태관리
   const [token, setToken] = useState(getToken);
 
-  //store the current loggedin user
+  //현재 로그인 유저 관리
   const [currentUser, setCurrentUser] = useState(null);
-  //handle sidebar opening and closing in the admin panel
+  //관리자 패널 확인
   const [openSidebar, setOpenSidebar] = useState(true);
-  //check the loggedin user is admin or not
+  //관리자 인지 확인
   const [isAdmin, setIsAdmin] = useState(isADmin);
 
   const fetchUser = async () => {
@@ -30,6 +30,7 @@ export const ContextProvider = ({ children }) => {
 
     if (user?.username) {
       try {
+        //서버에 현재 유저정보를 요청
         const { data } = await api.get(`/auth/user`);
         const roles = data.roles;
 
@@ -48,14 +49,14 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-  //if  token exist fetch the current user
+  //처음 시작시 또는 토큰이 바뀔때마다 유저정보를 가져옴
   useEffect(() => {
     if (token) {
       fetchUser();
     }
   }, [token]);
 
-  //through context provider you are sending all the datas so that we access at anywhere in your application
+  //컨텍스트프로바이더가 value 의 모든 정보를 모든 컴포넌트에 제공함
   return (
     <ContextApi.Provider
       value={{
@@ -74,7 +75,7 @@ export const ContextProvider = ({ children }) => {
   );
 };
 
-//by using this (useMyContext) custom hook we can reach our context provier and access the datas across our components
+//useMyContext() 로 이 컨텍스트를 사용함!
 export const useMyContext = () => {
   const context = useContext(ContextApi);
 
