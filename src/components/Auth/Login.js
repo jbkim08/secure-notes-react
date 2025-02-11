@@ -20,9 +20,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   // 컨텍스트로 토큰 가져옴
   const { setToken, token } = useMyContext();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //이동객체
 
-  //react hook form initialization
+  //리액트 훅 폼 사용
   const {
     register,
     handleSubmit,
@@ -37,6 +37,7 @@ const Login = () => {
     mode: "onTouched",
   });
 
+  //로그인 성공시
   const handleSuccessfulLogin = (token, decodedToken) => {
     const user = {
       username: decodedToken.sub,
@@ -45,48 +46,43 @@ const Login = () => {
     localStorage.setItem("JWT_TOKEN", token);
     localStorage.setItem("USER", JSON.stringify(user));
 
-    //store the token on the context state  so that it can be shared any where in our application by context provider
+    //컨텍스트에 토큰을 저장
     setToken(token);
 
-    navigate("/notes");
+    navigate("/notes"); //노트 페이지로 이동
   };
 
-  //function for handle login with credentials
+  //로그인 함수
   const onLoginHandler = async (data) => {
     try {
-      setLoading(true);
+      setLoading(true); //로딩시작
       const response = await api.post("/auth/public/signin", data);
 
-      //showing success message with react hot toast
-      toast.success("Login Successful");
-
-      //reset the input field by using reset() function provided by react hook form after submission
-      reset();
+      toast.success("로그인 성공!");
+      reset(); //입력창 리셋
 
       if (response.status === 200 && response.data.jwtToken) {
         setJwtToken(response.data.jwtToken);
         const decodedToken = jwtDecode(response.data.jwtToken);
+        console.log(decodedToken); //토큰해석
         handleSuccessfulLogin(response.data.jwtToken, decodedToken);
       } else {
-        toast.error(
-          "Login failed. Please check your credentials and try again."
-        );
+        toast.error("로그인 실패! 유저네임과 패스워드 확인필요.");
       }
     } catch (error) {
       if (error) {
-        toast.error("Invalid credentials");
+        toast.error("로그인 실패! 에러발생!");
       }
     } finally {
       setLoading(false);
     }
   };
 
-  //if there is token  exist navigate  the user to the home page if he tried to access the login page
+  //토큰이 있으면 홈페이지로 감(로그인 필요없음)
   useEffect(() => {
     if (token) navigate("/");
   }, [navigate, token]);
 
-  //step1 will render the login form and step-2 will render the 2fa verification form
   return (
     <div className="min-h-[calc(100vh-74px)] flex justify-center items-center">
       <React.Fragment>
