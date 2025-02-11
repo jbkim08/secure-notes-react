@@ -30,11 +30,11 @@ const AllNotes = () => {
   };
 
   useEffect(() => {
-    //calling the function here to fetch all notes
+    //유저의 모든 노트 가져오기(처음 한번)
     fetchNotes();
   }, []);
 
-  //to show an errors
+  //에러나면 표시
   if (error) {
     return <Errors message={error} />;
   }
