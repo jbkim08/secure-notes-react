@@ -7,17 +7,19 @@ import State from "./LandingPageCom/State";
 import Testimonial from "./LandingPageCom/Testimonial/Testimonial";
 import { useMyContext } from "../store/ContextApi";
 
+//위에서 내려오는 애니메이션
 const fadeInFromTop = {
   hidden: { opacity: 0, y: -50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
 };
+//밑에서 올라오는 애니메이션
 const fadeInFromBotom = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 const LandingPage = () => {
-  // Access the token  state by using the useMyContext hook from the ContextProvider
+  // 컨텍스트에서 토큰 가져옴
   const { token } = useMyContext();
 
   return (
@@ -29,7 +31,7 @@ const LandingPage = () => {
           animate="visible"
           variants={fadeInFromTop}
         >
-          Turn your thoughts into secure, organized notes And Faster.
+          누구든지 원하는 노트를 작성해 보세요!
         </motion.h1>
         <h3 className="text-logoText md:text-2xl text-xl font-semibold text-slate-800 text-center">
           The #1 secure note-taking app.
@@ -62,12 +64,12 @@ const LandingPage = () => {
             <>
               <Link to="/login">
                 <Buttons className="sm:w-52 w-44 bg-customRed font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
-                  SignIn
+                  로그인
                 </Buttons>
               </Link>
               <Link to="/signup">
                 <Buttons className="sm:w-52 w-44 bg-btnColor font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
-                  SignUp
+                  가입하기
                 </Buttons>
               </Link>
             </>
