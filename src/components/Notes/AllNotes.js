@@ -18,7 +18,7 @@ const AllNotes = () => {
 
       const parsedNotes = response.data.map((note) => ({
         ...note,
-        parsedContent: JSON.parse(note.content).content, // Assuming each note's content is JSON-formatted.
+        parsedContent: JSON.parse(note.content).content, // 제이슨문자열을 변환해서 안의 내용만 가져옴
       }));
       setNotes(parsedNotes);
     } catch (error) {
@@ -60,7 +60,7 @@ const AllNotes = () => {
                 visible={true}
               />
             </span>
-            <span>Please wait...</span>
+            <span>로딩중...</span>
           </div>
         ) : (
           <>
@@ -68,16 +68,15 @@ const AllNotes = () => {
               <div className="flex flex-col items-center justify-center min-h-96  p-4">
                 <div className="text-center">
                   <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                    You didn't create any note yet
+                    아직 만든 노트가 없습니다.
                   </h2>
                   <p className="text-gray-600 mb-6">
-                    Start by creating a new note to keep track of your thoughts.
+                    당신의 생각을 노트로 표현해 보세요.
                   </p>
                   <div className="w-full flex justify-center">
                     <Link to="/create-note">
                       <button className="flex items-center px-4 py-2 bg-btnColor text-white rounded  focus:outline-none focus:ring-2 focus:ring-blue-300">
-                        <FiFilePlus className="mr-2" size={24} />
-                        Create New Note
+                        <FiFilePlus className="mr-2" size={24} />새 노트 작성
                       </button>
                     </Link>
                   </div>
