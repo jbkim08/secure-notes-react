@@ -22,7 +22,7 @@ export const userListsColumns = [
     editable: false,
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal  border",
-    renderHeader: (params) => <span className="text-center">UserName</span>,
+    renderHeader: (params) => <span className="text-center">유저네임</span>,
   },
 
   {
@@ -36,7 +36,7 @@ export const userListsColumns = [
     cellClassName: "text-slate-700 font-normal  border  text-center ",
     align: "center",
     disableColumnMenu: true,
-    renderHeader: (params) => <span>Email</span>,
+    renderHeader: (params) => <span>이메일</span>,
     renderCell: (params) => {
       return (
         <div className=" flex  items-center justify-center  gap-1 ">
@@ -58,7 +58,7 @@ export const userListsColumns = [
     cellClassName: "text-slate-700 font-normal  border  ",
     align: "center",
     disableColumnMenu: true,
-    renderHeader: (params) => <span>Created At</span>,
+    renderHeader: (params) => <span>가입일자</span>,
     renderCell: (params) => {
       return (
         <div className=" flex justify-center  items-center  gap-1 ">
@@ -80,7 +80,7 @@ export const userListsColumns = [
     disableColumnMenu: true,
     headerClassName: "text-black font-semibold border ",
     cellClassName: "text-slate-700 font-normal  border  ",
-    renderHeader: (params) => <span className="ps-10">Status</span>,
+    renderHeader: (params) => <span className="ps-10">상태</span>,
   },
   {
     field: "action",
@@ -91,7 +91,7 @@ export const userListsColumns = [
     cellClassName: "text-slate-700 font-normal",
     sortable: false,
     width: 200,
-    renderHeader: (params) => <span>Action</span>,
+    renderHeader: (params) => <span>액션</span>,
     renderCell: (params) => {
       return (
         <Link
@@ -112,6 +112,7 @@ const UserList = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  //처음 시작시 유저데이터를 가져와 users에 저장함
   useEffect(() => {
     setLoading(true);
     const fetchUsers = async () => {
@@ -133,7 +134,7 @@ const UserList = () => {
 
   const rows = users.map((item) => {
     const formattedDate = moment(item.createdDate).format(
-      "MMMM DD, YYYY, hh:mm A"
+      "YYYY-MM-DD hh:mm:ss a"
     );
 
     //set the data for each rows in the table according to the field name in columns
