@@ -8,6 +8,7 @@ import Buttons from "../../utils/Buttons";
 import toast from "react-hot-toast";
 import Errors from "../Errors";
 
+//관리자 액션버튼 클릭시 => 유저디테일 페이지
 const UserDetails = () => {
   const {
     register,
@@ -34,6 +35,7 @@ const UserDetails = () => {
   const [error, setError] = useState(null);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
 
+  //유저 정보를 가져옴
   const fetchUserDetails = useCallback(async () => {
     setLoading(true);
     try {
@@ -43,14 +45,14 @@ const UserDetails = () => {
       setSelectedRole(response.data.role?.roleName || "");
     } catch (err) {
       setError(err?.response?.data?.message);
-      console.error("Error fetching user details", err);
+      console.error("유저 정보가져오기 에러", err);
     } finally {
       setLoading(false);
     }
   }, [userId]);
 
   useEffect(() => {
-    //if user exist set the value by using the setValue function provided my react-hook-form
+    // react-hook-form 에 유저이름과 이메일을 업데이트
     if (user && Object.keys(user).length > 0) {
       setValue("username", user.userName);
       setValue("email", user.email);
@@ -63,21 +65,22 @@ const UserDetails = () => {
       setRoles(response.data);
     } catch (err) {
       setError(err?.response?.data?.message);
-      console.error("Error fetching roles", err);
+      console.error("권한을 가져오기 에러", err);
     }
   }, []);
 
+  //처음 시작시 유저정보와 권한정보를 가져옴
   useEffect(() => {
     fetchUserDetails();
     fetchRoles();
   }, [fetchUserDetails, fetchRoles]);
 
-  //set the selected role
+  //현재 선택한 권한 업데이트
   const handleRoleChange = (e) => {
     setSelectedRole(e.target.value);
   };
 
-  //handle update role
+  //권한을 서버에 업데이트
   const handleUpdateRole = async () => {
     setUpdateRoleLoader(true);
     try {
@@ -100,7 +103,7 @@ const UserDetails = () => {
     }
   };
 
-  //handle update the password
+  //패스워드 업데이트
   const handleSavePassword = async (data) => {
     setPasswordLoader(true);
     const newPassword = data.password;
@@ -118,7 +121,7 @@ const UserDetails = () => {
       setIsEditingPassword(false);
       setValue("password", "");
       //fetchUserDetails();
-      toast.success("password update success");
+      toast.success("패스워드 업데이트 성공");
     } catch (err) {
       toast.error("Error updating password " + err.response.data);
     } finally {
@@ -190,7 +193,7 @@ const UserDetails = () => {
           <div className="lg:w-[70%] sm:w-[90%] w-full  mx-auto shadow-lg shadow-gray-300 p-8 rounded-md">
             <div>
               <h1 className="text-slate-800 text-2xl font-bold  pb-4">
-                Profile Information
+                유저 프로파일
                 <hr />
               </h1>
               <form
@@ -198,7 +201,7 @@ const UserDetails = () => {
                 onSubmit={handleSubmit(handleSavePassword)}
               >
                 <InputField
-                  label="UserName"
+                  label="유저네임"
                   required
                   id="username"
                   className="w-full"
@@ -210,7 +213,7 @@ const UserDetails = () => {
                   readOnly
                 />
                 <InputField
-                  label="Email"
+                  label="이메일"
                   required
                   id="email"
                   className="flex-1"
@@ -222,7 +225,7 @@ const UserDetails = () => {
                   readOnly
                 />
                 <InputField
-                  label="Password"
+                  label="패스워드"
                   required
                   autoFocus={isEditingPassword}
                   id="password"
@@ -243,7 +246,7 @@ const UserDetails = () => {
                     }
                     className="bg-customRed mb-0 w-fit px-4 py-2 rounded-md text-white"
                   >
-                    Click To Edit Password
+                    패스워드 업데이트
                   </Buttons>
                 ) : (
                   <div className="flex items-center gap-2 ">
@@ -251,7 +254,7 @@ const UserDetails = () => {
                       type="submit"
                       className="bg-btnColor mb-0 w-fit px-4 py-2 rounded-md text-white"
                     >
-                      {passwordLoader ? "Loading.." : "Save"}
+                      {passwordLoader ? "로딩중.." : "저장"}
                     </Buttons>
                     <Buttons
                       type="button"
@@ -260,7 +263,7 @@ const UserDetails = () => {
                       }
                       className="bg-customRed mb-0 w-fit px-4 py-2 rounded-md text-white"
                     >
-                      Cancel
+                      취소
                     </Buttons>
                   </div>
                 )}
