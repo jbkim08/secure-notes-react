@@ -21,16 +21,16 @@ const ResetPassword = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams(); //쿼리스트링(?~) 문자열
 
   const handleResetPassword = async (data) => {
     const { password } = data;
-
+    //요청주소 뒤의 토큰을 가져옴
     const token = searchParams.get("token");
 
     setLoading(true);
     try {
-      const formData = new URLSearchParams();
+      const formData = new URLSearchParams(); //쿼리스트링 만들기
 
       formData.append("token", token);
       formData.append("newPassword", password);
@@ -39,10 +39,10 @@ const ResetPassword = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      toast.success("Password reset successful! You can now log in.");
+      toast.success("패스워드 리셋 성공! 다시 로그인 해주세요.");
       reset();
     } catch (error) {
-      toast.error("Error resetting password. Please try again.");
+      toast.error("에러 : 패스워드 리셋중");
     } finally {
       setLoading(false);
     }
