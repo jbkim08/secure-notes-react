@@ -6,56 +6,56 @@ import toast from "react-hot-toast";
 const ContextApi = createContext();
 
 export const ContextProvider = ({ children }) => {
-  //find the token in the localstorage
+  //JWT 토큰을 로컬스토리지에서 가져옴
   const getToken = localStorage.getItem("JWT_TOKEN")
     ? JSON.stringify(localStorage.getItem("JWT_TOKEN"))
     : null;
-  //find is the user status from the localstorage
+  //유저가 관리자인지 로컬스토리지에서 가져옴 (true/false)
   const isADmin = localStorage.getItem("IS_ADMIN")
     ? JSON.stringify(localStorage.getItem("IS_ADMIN"))
     : false;
 
-  //store the token
+  //토큰 스테이트
   const [token, setToken] = useState(getToken);
 
-  //store the current loggedin user
+  //인증된 유저
   const [currentUser, setCurrentUser] = useState(null);
-  //handle sidebar opening and closing in the admin panel
+  //사이드바
   const [openSidebar, setOpenSidebar] = useState(true);
-  //check the loggedin user is admin or not
+  //관리자
   const [isAdmin, setIsAdmin] = useState(isADmin);
-
+  //유저정보를 가져오는 함수
   const fetchUser = async () => {
     const user = JSON.parse(localStorage.getItem("USER"));
 
     if (user?.username) {
       try {
-        const { data } = await api.get(`/auth/user`);
-        const roles = data.roles;
+        const { data } = await api.get(`/auth/user`); //현재 인증된 유저정보
+        const roles = data.roles; //유저권한
 
         if (roles.includes("ROLE_ADMIN")) {
-          localStorage.setItem("IS_ADMIN", JSON.stringify(true));
+          localStorage.setItem("IS_ADMIN", JSON.stringify(true)); //관리자 true로 저장
           setIsAdmin(true);
         } else {
-          localStorage.removeItem("IS_ADMIN");
-          setIsAdmin(false);
+          localStorage.removeItem("IS_ADMIN"); //로컬스토리지에서 제거
+          setIsAdmin(false); //관리자 false 저장
         }
-        setCurrentUser(data);
+        setCurrentUser(data); //유저데이터 저장
       } catch (error) {
-        console.error("Error fetching current user", error);
-        toast.error("Error fetching current user");
+        console.error("현재 유저를 가져오는데 실패!", error);
+        toast.error("현재 유저를 가져오는데 실패!");
       }
     }
   };
 
-  //if  token exist fetch the current user
   useEffect(() => {
     if (token) {
+      //토큰이 있는 경우에만
       fetchUser();
     }
-  }, [token]);
+  }, [token]); //처음 시작시 그리고 토큰이 바뀔때마다 현재 유저정보를 가져옴
 
-  //through context provider you are sending all the datas so that we access at anywhere in your application
+  //컨텍스트가 제공하는 전역 값들
   return (
     <ContextApi.Provider
       value={{
@@ -74,7 +74,7 @@ export const ContextProvider = ({ children }) => {
   );
 };
 
-//by using this (useMyContext) custom hook we can reach our context provier and access the datas across our components
+//useMyContext() 를 사용해서 useContext와 ContextApi를 import 함
 export const useMyContext = () => {
   const context = useContext(ContextApi);
 
