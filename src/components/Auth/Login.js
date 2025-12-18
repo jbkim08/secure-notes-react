@@ -87,12 +87,10 @@ const Login = () => {
           className="sm:w-[450px] w-[360px]  shadow-custom py-8 sm:px-8 px-4"
         >
           <div>
-            <h1 className="font-montserrat text-center font-bold text-2xl">
-              Login Here
+            <h1 className="font-montserrat text-center font-bold text-3xl">
+              로그인
             </h1>
-            <p className="text-slate-600 text-center">
-              Please Enter your username and password{" "}
-            </p>
+
             <div className="flex items-center justify-between gap-1 py-5 ">
               <Link
                 to={`${apiUrl}/oauth2/authorization/google`}
@@ -149,7 +147,7 @@ const Login = () => {
             className="bg-customRed font-semibold text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
             type="text"
           >
-            {loading ? <span>Loading...</span> : "LogIn"}
+            {loading ? <span>Loading...</span> : "로그인"}
           </Buttons>
           <p className=" text-sm text-slate-700 ">
             <Link className=" underline hover:text-black" to="/forgot-password">
