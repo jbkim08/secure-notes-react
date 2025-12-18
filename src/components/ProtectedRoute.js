@@ -3,15 +3,15 @@ import { Navigate } from "react-router-dom";
 import { useMyContext } from "../store/ContextApi";
 
 const ProtectedRoute = ({ children, adminPage }) => {
-  // Access the token and isAdmin state by using the useMyContext hook from the ContextProvider
+  // 토큰과 관리자 값을 가져옴
   const { token, isAdmin } = useMyContext();
 
-  //navigate to login page to an unauthenticated
+  //토큰이 없는 경우에는 로그인 페이지로
   if (!token) {
     return <Navigate to="/login" />;
   }
 
-  //navigate to access-denied page if a user try to access the admin page
+  //토큰이 있고 관리자페이지 이고 관리자가 아닌경우 => 권한이 없으므로 /access-denied 로
   if (token && adminPage && !isAdmin) {
     return <Navigate to="/access-denied" />;
   }
@@ -20,7 +20,6 @@ const ProtectedRoute = ({ children, adminPage }) => {
 };
 
 export default ProtectedRoute;
-
 
 // USING LOCAL STORAGE OPTION FOR OAUTH ISSUE SINCE IT WAS NOT GETTING REDIRECTED.
 // import React from "react";
