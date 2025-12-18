@@ -10,7 +10,7 @@ const Navbar = () => {
   const pathName = useLocation().pathname;
   const navigate = useNavigate();
 
-  // Access the states by using the useMyContext hook from the ContextProvider
+  // useMyContext 로 가져온 상태값
   const { token, setToken, setCurrentUser, isAdmin, setIsAdmin } =
     useMyContext();
 
@@ -39,6 +39,7 @@ const Navbar = () => {
               : "h-0 overflow-hidden "
           }  lg:h-auto transition-all duration-100 font-montserrat text-textColor flex lg:flex-row flex-col lg:gap-8 gap-2`}
         >
+          {/* 인증된 유저만 보이는 메뉴 */}
           {token && (
             <>
               <Link to="/notes">
@@ -93,6 +94,7 @@ const Navbar = () => {
                   Profile
                 </li>
               </Link>{" "}
+              {/* 관리자만 보이는 메뉴 */}
               {isAdmin && (
                 <Link to="/admin/users">
                   <li
