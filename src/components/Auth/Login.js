@@ -176,46 +176,7 @@ const Login = () => {
             </p>
           </form>
         </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <form
-            onSubmit={handleSubmit(onVerify2FaHandler)}
-            className="sm:w-[450px] w-[360px]  shadow-custom py-8 sm:px-8 px-4"
-          >
-            <div>
-              <h1 className="font-montserrat text-center font-bold text-2xl">
-                Verify 2FA
-              </h1>
-              <p className="text-slate-600 text-center">
-                Enter the correct code to complete 2FA Authentication
-              </p>
-
-              <Divider className="font-semibold pb-4"></Divider>
-            </div>
-
-            <div className="flex flex-col gap-2 mt-4">
-              <InputField
-                label="Enter Code"
-                required
-                id="code"
-                type="text"
-                message="*Code is required"
-                placeholder="Enter your 2FA code"
-                register={register}
-                errors={errors}
-              />
-            </div>
-            <Buttons
-              disabled={loading}
-              onClickhandler={() => {}}
-              className="bg-customRed font-semibold text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
-              type="text"
-            >
-              {loading ? <span>Loading...</span> : "Verify 2FA"}
-            </Buttons>
-          </form>
-        </React.Fragment>
-      )}
+      ) : null}
     </div>
   );
 };
