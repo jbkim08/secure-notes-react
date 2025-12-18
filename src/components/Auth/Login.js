@@ -37,76 +37,41 @@ const Login = () => {
     },
     mode: "onTouched",
   });
-
+  //로그인 성공시 실행하는 함수
   const handleSuccessfulLogin = (token, decodedToken) => {
     const user = {
       username: decodedToken.sub,
       roles: decodedToken.roles ? decodedToken.roles.split(",") : [],
     };
+    //토큰과 유저정보를 로컬스토리지에 저장
     localStorage.setItem("JWT_TOKEN", token);
     localStorage.setItem("USER", JSON.stringify(user));
 
-    //store the token on the context state  so that it can be shared any where in our application by context provider
-    setToken(token);
+    setToken(token); //토큰을 전역으로 공유
 
-    navigate("/notes");
+    navigate("/notes"); //모든 노트 페이지로 이동
   };
 
-  //function for handle login with credentials
+  //로그인 실행 함수
   const onLoginHandler = async (data) => {
     try {
       setLoading(true);
       const response = await api.post("/auth/public/signin", data);
 
-      //showing success message with react hot toast
-      toast.success("Login Successful");
-
-      //reset the input field by using reset() function provided by react hook form after submission
+      toast.success("로그인 성공!");
       reset();
-
+      //로그인 성공시 jwt토큰을 저장
       if (response.status === 200 && response.data.jwtToken) {
         setJwtToken(response.data.jwtToken);
-        const decodedToken = jwtDecode(response.data.jwtToken);
-        if (decodedToken.is2faEnabled) {
-          setStep(2); // Move to 2FA verification step
-        } else {
-          handleSuccessfulLogin(response.data.jwtToken, decodedToken);
-        }
+        const decodedToken = jwtDecode(response.data.jwtToken); //토큰암호를 풀어서
+        handleSuccessfulLogin(response.data.jwtToken, decodedToken);
       } else {
-        toast.error(
-          "Login failed. Please check your credentials and try again."
-        );
+        toast.error("로그인 실패! 다시 시도해 주세요.");
       }
     } catch (error) {
       if (error) {
-        toast.error("Invalid credentials");
+        toast.error("유저네임 또는 패스워드가 틀립니다.");
       }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  //function for verify 2fa authentication
-  const onVerify2FaHandler = async (data) => {
-    const code = data.code;
-    setLoading(true);
-
-    try {
-      const formData = new URLSearchParams();
-      formData.append("code", code);
-      formData.append("jwtToken", jwtToken);
-
-      await api.post("/auth/public/verify-2fa-login", formData, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      });
-
-      const decodedToken = jwtDecode(jwtToken);
-      handleSuccessfulLogin(jwtToken, decodedToken);
-    } catch (error) {
-      console.error("2FA verification error", error);
-      toast.error("Invalid 2FA code. Please try again.");
     } finally {
       setLoading(false);
     }
