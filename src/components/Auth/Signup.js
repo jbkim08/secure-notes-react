@@ -11,15 +11,15 @@ import toast from "react-hot-toast";
 import { useMyContext } from "../../store/ContextApi";
 import { useEffect } from "react";
 
+//가입하기 페이지
 const Signup = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
-  const [role, setRole] = useState();
+  const apiUrl = process.env.REACT_APP_API_URL; //백엔드 기본주소
+  const [role, setRole] = useState(); //유저의 권한
   const [loading, setLoading] = useState(false);
-  // Access the token and setToken function using the useMyContext hook from the ContextProvider
-  const { token } = useMyContext();
-  const navigate = useNavigate();
+  const { token } = useMyContext(); // 컨텍스트에서 토큰가져오기
+  const navigate = useNavigate(); // 이동객체
 
-  //react hook form initialization
+  //react hook form 설정
   const {
     register,
     handleSubmit,
@@ -39,19 +39,21 @@ const Signup = () => {
     setRole("ROLE_USER");
   }, []);
 
+  //가입하기 실행 함수
   const onSubmitHandler = async (data) => {
     const { username, email, password } = data;
     const sendData = {
       username,
       email,
       password,
-      role: [role],
+      role: [role], //기본 유저롤
     };
 
     try {
       setLoading(true);
+      //백엔드에 가입하기 url로 요청함
       const response = await api.post("/auth/public/signup", sendData);
-      toast.success("Reagister Successful");
+      toast.success("가입하기 성공!");
       reset();
       if (response.data) {
         navigate("/login");
@@ -86,12 +88,10 @@ const Signup = () => {
         className="sm:w-[450px] w-[360px]  shadow-custom py-6 sm:px-8 px-4"
       >
         <div>
-          <h1 className="font-montserrat text-center font-bold text-2xl">
-            Register Here Here
+          <h1 className="font-montserrat text-center font-bold text-3xl">
+            가입하기
           </h1>
-          <p className="text-slate-600 text-center">
-            Enter your credentials to create new account
-          </p>
+
           <div className="flex items-center justify-between gap-1 py-5 ">
             <a
               href={`${apiUrl}/oauth2/authorization/google`}
@@ -126,8 +126,8 @@ const Signup = () => {
             required
             id="username"
             type="text"
-            message="*UserName is required"
-            placeholder="type your username"
+            message="유저네임이 필요합니다"
+            placeholder="유저네임 입력..."
             register={register}
             errors={errors}
           />{" "}
@@ -136,8 +136,8 @@ const Signup = () => {
             required
             id="email"
             type="email"
-            message="*Email is required"
-            placeholder="type your email"
+            message="이메일이 필요합니다"
+            placeholder="이메일 입력..."
             register={register}
             errors={errors}
           />
@@ -146,8 +146,8 @@ const Signup = () => {
             required
             id="password"
             type="password"
-            message="*Password is required"
-            placeholder="type your password"
+            message="패스워드가 필요합니다"
+            placeholder="패스워드 입력..."
             register={register}
             errors={errors}
             min={6}
