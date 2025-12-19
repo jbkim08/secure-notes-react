@@ -5,9 +5,12 @@ import { truncateText } from "../../utils/truncateText";
 import { Link } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import moment from "moment";
+import "moment/locale/ko"; // 한국어 로케일 추가
 
+//한개의 노트를 화면에 표시
 const NoteItems = ({ parsedContent, id, createdAt }) => {
-  const formattedDate = moment(createdAt).format("D MMMM YYYY");
+  moment.locale("ko");
+  const formattedDate = moment(createdAt).format("YYYY MMMM Do, h:mm:ss");
   return (
     <div className="sm:px-5 px-2 py-5 shadow-md bg-noteColor shadow-white rounded-lg min-h-96 max-h-96 relative overflow-hidden ">
       <p
@@ -18,7 +21,7 @@ const NoteItems = ({ parsedContent, id, createdAt }) => {
         <span>{formattedDate}</span>
         <Link to={`/notes/${id}`}>
           {" "}
-          <Tooltip title="View Note">
+          <Tooltip title="노트 보기">
             <IconButton>
               <MdRemoveRedEye className="text-slate-700" />
             </IconButton>
