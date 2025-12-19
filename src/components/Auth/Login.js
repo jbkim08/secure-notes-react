@@ -53,6 +53,7 @@ const Login = () => {
   const onLoginHandler = async (data) => {
     try {
       setLoading(true);
+      // 백엔드로 로그인 요청 data는 username과 password
       const response = await api.post("/auth/public/signin", data);
 
       toast.success("로그인 성공!");
