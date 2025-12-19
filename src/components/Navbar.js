@@ -48,7 +48,7 @@ const Navbar = () => {
                     pathName === "/notes" ? "font-semibold " : ""
                   } py-2 cursor-pointer  hover:text-slate-300 `}
                 >
-                  My Notes
+                  내 노트보기
                 </li>
               </Link>
               <Link to="/create-note">
@@ -57,7 +57,7 @@ const Navbar = () => {
                     pathName === "/create-note" ? "font-semibold " : ""
                   } `}
                 >
-                  Create Note
+                  노트 작성
                 </li>
               </Link>
             </>
