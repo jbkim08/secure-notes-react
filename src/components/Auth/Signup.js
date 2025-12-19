@@ -56,20 +56,17 @@ const Signup = () => {
       toast.success("가입하기 성공!");
       reset();
       if (response.data) {
-        navigate("/login");
+        navigate("/login"); //로그인 페이지로
       }
     } catch (error) {
-      // Add an error programmatically by using the setError function provided by react-hook-form
-      //setError(keyword,message) => keyword means the name of the field where I want to show the error
-
       if (
-        error?.response?.data?.message === "Error: Username is already taken!"
+        error?.response?.data?.message === "Error: 유저네임이 이미 있습니다!"
       ) {
-        setError("username", { message: "username is already taken" });
+        setError("username", { message: "유저네임이 이미 있습니다" });
       } else if (
-        error?.response?.data?.message === "Error: Email is already in use!"
+        error?.response?.data?.message === "Error: 이메일이 이미 있습니다!"
       ) {
-        setError("email", { message: "Email is already in use" });
+        setError("email", { message: "이메일이 이미 있습니다!" });
       }
     } finally {
       setLoading(false);
