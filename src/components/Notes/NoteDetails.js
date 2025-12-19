@@ -13,14 +13,14 @@ import toast from "react-hot-toast";
 import Modals from "../PopModal";
 //importing the the columns from the auditlogs
 import { auditLogscolumn } from "../../utils/tableColumn";
-
+// 노트 하나 상세보기
 const NoteDetails = () => {
-  const { id } = useParams();
-  //open modal for deleteing a note
+  const { id } = useParams(); //주소변수 id를 가져옴
+  //삭제시 모달창
   const [modalOpen, setModalOpen] = useState(false);
-
+  //노트하나
   const [note, setNote] = useState(null);
-
+  //노트의 내용 editorContent
   const [editorContent, setEditorContent] = useState(note?.parsedContent);
   const [auditLogs, setAuditLogs] = useState([]);
   const [error, setError] = useState(null);
@@ -30,20 +30,21 @@ const NoteDetails = () => {
   const [editEnable, setEditEnable] = useState(false);
   const navigate = useNavigate();
 
+  //백엔드에서 노트 하나의 데이터 가져오기
   const fetchNoteDetails = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get("/notes");
-      const foundNote = response.data.find((n) => n.id.toString() === id);
+      const response = await api.get("/notes"); //모든 노트를 가져와서
+      const foundNote = response.data.find((n) => n.id.toString() === id); //id가 같은것을 찾음
       if (foundNote) {
         foundNote.parsedContent = JSON.parse(foundNote.content).content; // Parse content
         setNote(foundNote);
       } else {
-        setError("Invalid Note");
+        setError("노트가 없음");
       }
     } catch (err) {
       setError(err?.response?.data?.message);
-      console.error("Error fetching note details", err);
+      console.error("노트가져오기 에러", err);
     } finally {
       setLoading(false);
     }
