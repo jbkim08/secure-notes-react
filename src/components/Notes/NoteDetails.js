@@ -110,8 +110,7 @@ const NoteDetails = () => {
     };
   });
 
-  //if there is an error
-
+  //에러가 있으면 에러페이지 표시
   if (error) {
     return <Errors message={error} />;
   }
