@@ -73,7 +73,7 @@ const Signup = () => {
     }
   };
 
-  //if there is token  exist navigate to the user to the home page if he tried to access the login page
+  //토큰인증이 된경우에는 기본페이지로
   useEffect(() => {
     if (token) navigate("/");
   }, [navigate, token]);
