@@ -29,7 +29,7 @@ const LandingPage = () => {
           animate="visible"
           variants={fadeInFromTop}
         >
-          Turn your thoughts into secure, organized notes And Faster.
+          당신의 생각을 빠르게 적어 보세요.
         </motion.h1>
         <h3 className="text-logoText md:text-2xl text-xl font-semibold text-slate-800 text-center">
           The #1 secure note-taking app.
@@ -49,12 +49,12 @@ const LandingPage = () => {
             <>
               <Link to="/create-note">
                 <Buttons className="sm:w-52 w-44 bg-customRed font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
-                  Create Note
+                  노트 작성
                 </Buttons>
               </Link>
               <Link to="/notes">
                 <Buttons className="sm:w-52 w-44 bg-btnColor font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
-                  My Notes
+                  내 노트보기
                 </Buttons>
               </Link>
             </>
@@ -62,12 +62,12 @@ const LandingPage = () => {
             <>
               <Link to="/login">
                 <Buttons className="sm:w-52 w-44 bg-customRed font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
-                  SignIn
+                  로그인
                 </Buttons>
               </Link>
               <Link to="/signup">
                 <Buttons className="sm:w-52 w-44 bg-btnColor font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
-                  SignUp
+                  가입하기
                 </Buttons>
               </Link>
             </>

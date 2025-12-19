@@ -23,7 +23,9 @@ import Footer from "./components/Footer/Footer";
 const App = () => {
   return (
     <Router>
+      {/* 네브바 최상단(고정) */}
       <Navbar />
+      {/* 토스트 메세지(사용할때 나옴) */}
       <Toaster position="bottom-center" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
