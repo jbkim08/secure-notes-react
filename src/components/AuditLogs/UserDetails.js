@@ -7,7 +7,7 @@ import { Blocks } from "react-loader-spinner";
 import Buttons from "../../utils/Buttons";
 import toast from "react-hot-toast";
 import Errors from "../Errors";
-
+//관리자가 유저 관리
 const UserDetails = () => {
   const {
     register,
@@ -33,7 +33,7 @@ const UserDetails = () => {
   const [selectedRole, setSelectedRole] = useState("");
   const [error, setError] = useState(null);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
-
+  //유저 정보를 가져오기
   const fetchUserDetails = useCallback(async () => {
     setLoading(true);
     try {
@@ -43,20 +43,20 @@ const UserDetails = () => {
       setSelectedRole(response.data.role?.roleName || "");
     } catch (err) {
       setError(err?.response?.data?.message);
-      console.error("Error fetching user details", err);
+      console.error("유저정보 가져오기 에러", err);
     } finally {
       setLoading(false);
     }
   }, [userId]);
-
+  //가져온 유저정보를 미리 입력함
   useEffect(() => {
-    //if user exist set the value by using the setValue function provided my react-hook-form
     if (user && Object.keys(user).length > 0) {
       setValue("username", user.userName);
       setValue("email", user.email);
     }
   }, [user, setValue]);
 
+  //가능한 권한들 가져옴
   const fetchRoles = useCallback(async () => {
     try {
       const response = await api.get("/admin/roles");
@@ -72,12 +72,12 @@ const UserDetails = () => {
     fetchRoles();
   }, [fetchUserDetails, fetchRoles]);
 
-  //set the selected role
+  //권한 업데이트
   const handleRoleChange = (e) => {
     setSelectedRole(e.target.value);
   };
 
-  //handle update role
+  //백엔드 서버로 권한 업데이트
   const handleUpdateRole = async () => {
     setUpdateRoleLoader(true);
     try {
@@ -100,7 +100,7 @@ const UserDetails = () => {
     }
   };
 
-  //handle update the password
+  //백엔드 서버로 유저 패스워드 업데이트
   const handleSavePassword = async (data) => {
     setPasswordLoader(true);
     const newPassword = data.password;
@@ -118,9 +118,9 @@ const UserDetails = () => {
       setIsEditingPassword(false);
       setValue("password", "");
       //fetchUserDetails();
-      toast.success("password update success");
+      toast.success("패스워드 업데이트 성공");
     } catch (err) {
-      toast.error("Error updating password " + err.response.data);
+      toast.error("업데이트 실패 " + err.response.data);
     } finally {
       setPasswordLoader(false);
     }
@@ -131,19 +131,18 @@ const UserDetails = () => {
 
     let message = null;
     if (name === "lock") {
-      message = "Update Account Lock status Successful";
+      message = "계정 잠금상태 업데이트";
     } else if (name === "expire") {
-      message = "Update Account Expiry status Successful";
+      message = "계정 만료상태 업데이트";
     } else if (name === "enabled") {
-      message = "Update Account Enabled status Successful";
+      message = "계정 가능상태 업데이트";
     } else if (name === "credentialsExpire") {
-      message = "Update Account Credentials Expired status Successful";
+      message = "계정 비번만료상태 업데이트";
     }
 
     try {
       const formData = new URLSearchParams();
       formData.append("userId", userId);
-
       formData.append(name, checked);
 
       await api.put(updateUrl, formData, {
@@ -190,7 +189,7 @@ const UserDetails = () => {
           <div className="lg:w-[70%] sm:w-[90%] w-full  mx-auto shadow-lg shadow-gray-300 p-8 rounded-md">
             <div>
               <h1 className="text-slate-800 text-2xl font-bold  pb-4">
-                Profile Information
+                유저 프로파일
                 <hr />
               </h1>
               <form
@@ -243,7 +242,7 @@ const UserDetails = () => {
                     }
                     className="bg-customRed mb-0 w-fit px-4 py-2 rounded-md text-white"
                   >
-                    Click To Edit Password
+                    패스워드 수정
                   </Buttons>
                 ) : (
                   <div className="flex items-center gap-2 ">
