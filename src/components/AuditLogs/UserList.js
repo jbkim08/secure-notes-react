@@ -9,8 +9,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineEmail } from "react-icons/md";
 import { MdDateRange } from "react-icons/md";
 
-//Material ui data grid has used for the table
-//initialize the columns for the tables and (field) value is used to show data in a specific column dynamically
+//테이블 제목 : 데이터그리드 columns 에 넣으면 제목이 나옴
 export const userListsColumns = [
   {
     field: "username",
@@ -22,7 +21,7 @@ export const userListsColumns = [
     editable: false,
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal  border",
-    renderHeader: (params) => <span className="text-center">UserName</span>,
+    renderHeader: (params) => <span className="text-center">유저네임</span>,
   },
 
   {
@@ -36,7 +35,7 @@ export const userListsColumns = [
     cellClassName: "text-slate-700 font-normal  border  text-center ",
     align: "center",
     disableColumnMenu: true,
-    renderHeader: (params) => <span>Email</span>,
+    renderHeader: (params) => <span>이메일</span>,
     renderCell: (params) => {
       return (
         <div className=" flex  items-center justify-center  gap-1 ">
@@ -58,7 +57,7 @@ export const userListsColumns = [
     cellClassName: "text-slate-700 font-normal  border  ",
     align: "center",
     disableColumnMenu: true,
-    renderHeader: (params) => <span>Created At</span>,
+    renderHeader: (params) => <span>가입일시</span>,
     renderCell: (params) => {
       return (
         <div className=" flex justify-center  items-center  gap-1 ">
@@ -80,7 +79,7 @@ export const userListsColumns = [
     disableColumnMenu: true,
     headerClassName: "text-black font-semibold border ",
     cellClassName: "text-slate-700 font-normal  border  ",
-    renderHeader: (params) => <span className="ps-10">Status</span>,
+    renderHeader: (params) => <span className="ps-10">상태</span>,
   },
   {
     field: "action",
@@ -91,7 +90,7 @@ export const userListsColumns = [
     cellClassName: "text-slate-700 font-normal",
     sortable: false,
     width: 200,
-    renderHeader: (params) => <span>Action</span>,
+    renderHeader: (params) => <span>유저보기</span>,
     renderCell: (params) => {
       return (
         <Link
@@ -133,11 +132,10 @@ const UserList = () => {
 
   const rows = users.map((item) => {
     const formattedDate = moment(item.createdDate).format(
-      "MMMM DD, YYYY, hh:mm A"
+      "YYYY년, MMMM DD일, hh:mm A"
     );
 
-    //set the data for each rows in the table according to the field name in columns
-    //Example: username is the keyword in row it should matche with the field name in column so that the data will show on that column dynamically
+    //실제 화면에 테이블 유저 데이터 날짜는 원하는 형식으로 바꿈
     return {
       id: item.userId,
       username: item.userName,

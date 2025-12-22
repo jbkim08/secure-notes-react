@@ -8,7 +8,7 @@ import AuditLogsDetails from "./AuditLogsDetails";
 import AdminAuditLogs from "./AdminAuditLogs";
 
 const Admin = () => {
-  // Access the openSidebar hook using the useMyContext hook from the ContextProvider
+  //관리자 페이지의 왼쪽 사이드바를 열고/닫고 상태
   const { openSidebar } = useMyContext();
   return (
     <div className="flex">
