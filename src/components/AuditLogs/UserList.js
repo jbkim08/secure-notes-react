@@ -153,7 +153,7 @@ const UserList = () => {
     <div className="p-4">
       <div className="py-4">
         <h1 className="text-center text-2xl font-bold text-slate-800 uppercase">
-          All Users
+          가입 유저들
         </h1>
       </div>
       <div className="overflow-x-auto w-full mx-auto">

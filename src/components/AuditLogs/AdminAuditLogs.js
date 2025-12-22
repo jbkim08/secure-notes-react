@@ -9,8 +9,7 @@ import Errors from "../Errors.js";
 import moment from "moment";
 import { MdDateRange } from "react-icons/md";
 
-//Material ui data grid has used for the table
-//initialize the columns for the tables and (field) value is used to show data in a specific column dynamically
+//제목열
 export const auditLogcolumns = [
   {
     field: "actions",
@@ -22,7 +21,7 @@ export const auditLogcolumns = [
     editable: false,
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal  border",
-    renderHeader: (params) => <span>Action</span>,
+    renderHeader: (params) => <span>액션</span>,
   },
 
   {
@@ -35,7 +34,7 @@ export const auditLogcolumns = [
     align: "center",
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal  border",
-    renderHeader: (params) => <span>UserName</span>,
+    renderHeader: (params) => <span>유저네임</span>,
   },
 
   {
@@ -48,7 +47,7 @@ export const auditLogcolumns = [
     align: "center",
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal  border",
-    renderHeader: (params) => <span>TimeStamp</span>,
+    renderHeader: (params) => <span>날짜</span>,
     renderCell: (params) => {
       return (
         <div className=" flex  items-center justify-center  gap-1 ">
@@ -70,7 +69,7 @@ export const auditLogcolumns = [
     align: "center",
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal  border",
-    renderHeader: (params) => <span>NoteId</span>,
+    renderHeader: (params) => <span>노트아이디</span>,
   },
   {
     field: "note",
@@ -82,7 +81,7 @@ export const auditLogcolumns = [
     align: "center",
     headerClassName: "text-black font-semibold border",
     cellClassName: "text-slate-700 font-normal  border",
-    renderHeader: (params) => <span>Note Content</span>,
+    renderHeader: (params) => <span>노트내용</span>,
     renderCell: (params) => {
       const contens = JSON.parse(params?.value)?.content;
 
@@ -102,7 +101,7 @@ export const auditLogcolumns = [
     cellClassName: "text-slate-700 font-normal  ",
     sortable: false,
 
-    renderHeader: (params) => <span>Action</span>,
+    renderHeader: (params) => <span>보기</span>,
     renderCell: (params) => {
       return (
         <Link
@@ -141,14 +140,11 @@ const AdminAuditLogs = () => {
   }, []);
 
   const rows = auditLogs.map((item) => {
-    //format the time bu using moment npm package
-
     const formattedDate = moment(item.timestamp).format(
-      "MMMM DD, YYYY, hh:mm A"
+      "YYYY년, MMMM DD일, hh:mm A"
     );
 
-    //set the data for each rows in the table according to the field name in columns
-    //Example: username is the keyword in row it should matche with the field name in column so that the data will show on that column dynamically
+    //테이블에 나오는 실제 노트 데이터
     return {
       id: item.id,
       noteId: item.noteId,
@@ -168,7 +164,7 @@ const AdminAuditLogs = () => {
     <div className="p-4">
       <div className="py-4">
         <h1 className="text-center text-2xl font-bold text-slate-800 uppercase">
-          Audit Logs
+          NOTE 로그 리스트
         </h1>
       </div>
       {loading ? (
