@@ -39,10 +39,10 @@ const ResetPassword = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      toast.success("Password reset successful! You can now log in.");
+      toast.success("패스워드 리셋 성공! 로그인 하세요!");
       reset();
     } catch (error) {
-      toast.error("Error resetting password. Please try again.");
+      toast.error("패스워드 리셋중 에러발생");
     } finally {
       setLoading(false);
     }

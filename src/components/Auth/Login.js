@@ -151,7 +151,7 @@ const Login = () => {
         </Buttons>
         <p className=" text-sm text-slate-700 ">
           <Link className=" underline hover:text-black" to="/forgot-password">
-            Forgot Password?
+            비밀번호 잊었나요?
           </Link>
         </p>
 

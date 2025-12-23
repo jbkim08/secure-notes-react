@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useMyContext } from "../../store/ContextApi";
-
+//비밀번호 잊었을때 클릭화면
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -29,7 +29,6 @@ const ForgotPassword = () => {
   });
 
   const onPasswordForgotHandler = async (data) => {
-    //destructuring email from the data object
     const { email } = data;
 
     try {
@@ -37,25 +36,23 @@ const ForgotPassword = () => {
 
       const formData = new URLSearchParams();
       formData.append("email", email);
+      //백엔드에 비밀번호 잊음 요청함 (email)
       await api.post("/auth/public/forgot-password", formData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-
-      //reset the field by using reset() function provided by react hook form after submit
       reset();
 
-      //showing success message
-      toast.success("Password reset email sent! Check your inbox.");
+      toast.success("패스워드 리셋 메일을 보냈습니다. 당신의 이메일 확인");
     } catch (error) {
-      toast.error("Error sending password reset email. Please try again.");
+      toast.error("패스워드 리셋 에러발생");
     } finally {
       setLoading(false);
     }
   };
 
-  //if there is token  exist navigate  the user to the home page if he tried to access the login page
+  //토큰이 있으면 바로 기본페이지로
   useEffect(() => {
     if (token) navigate("/");
   }, [token, navigate]);
