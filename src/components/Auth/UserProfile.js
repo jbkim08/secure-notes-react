@@ -246,7 +246,7 @@ const UserProfile = () => {
                   id="panel1-header"
                 >
                   <h3 className="text-slate-800 text-lg font-semibold ">
-                    Update User Credentials
+                    비밀번호 업데이트
                   </h3>
                 </AccordionSummary>
                 <AccordionDetails className="shadow-md shadow-gray-300">
@@ -308,7 +308,7 @@ const UserProfile = () => {
                     id="panel1-header"
                   >
                     <h3 className="text-slate-800 text-lg font-semibold">
-                      Account Setting
+                      계정 설정
                     </h3>
                   </AccordionSummary>
                   <AccordionDetails className="shadow-md shadow-gray-300">
@@ -377,11 +377,11 @@ const UserProfile = () => {
 
               <div className="pt-10 ">
                 <h3 className="text-slate-800 text-lg font-semibold  mb-2 px-2">
-                  Last Login Session
+                  최근 로그인 상태
                 </h3>
                 <div className="shadow-md shadow-gray-300 px-4 py-2 rounded-md">
                   <p className="text-slate-700 text-sm">
-                    Your Last LogIn Session when you are loggedin <br />
+                    당신의 가장 최근 로그인은 <br />
                     <span>{loginSession}</span>
                   </p>
                 </div>
