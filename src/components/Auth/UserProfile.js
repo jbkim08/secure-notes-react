@@ -12,7 +12,6 @@ import Buttons from "../../utils/Buttons";
 import Switch from "@mui/material/Switch";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
-import { Blocks } from "react-loader-spinner";
 import moment from "moment";
 import Errors from "../Errors";
 
@@ -319,6 +318,7 @@ const UserProfile = () => {
                           Account Expired
                         </h3>
                         <Switch
+                          defaultChecked={false}
                           checked={accountExpired}
                           onChange={handleAccountExpiryStatus}
                           inputProps={{ "aria-label": "controlled" }}
@@ -329,6 +329,7 @@ const UserProfile = () => {
                           Account Locked
                         </h3>
                         <Switch
+                          defaultChecked={false}
                           checked={accountLocked}
                           onChange={handleAccountLockStatus}
                           inputProps={{ "aria-label": "controlled" }}
@@ -339,6 +340,7 @@ const UserProfile = () => {
                           Account Enabled
                         </h3>
                         <Switch
+                          defaultChecked={false}
                           checked={accountEnabled}
                           onChange={handleAccountEnabledStatus}
                           inputProps={{ "aria-label": "controlled" }}
@@ -362,6 +364,7 @@ const UserProfile = () => {
                           Credential Expired
                         </h3>
                         <Switch
+                          defaultChecked={false}
                           checked={credentialExpired}
                           onChange={handleCredentialExpiredStatus}
                           inputProps={{ "aria-label": "controlled" }}
